@@ -48,8 +48,19 @@ include_guard(GLOBAL)
 ########################################################################################
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)  
+include(coverage)
 
-function(my_add_library _NAME)
+macro(my_add_library)
+set(_current_directory ${CMAKE_CURRENT_SOURCE_DIR})
+_my_add_library(${ARGV})
+endmacro()
+
+macro(my_add_executable)
+set(_current_directory ${CMAKE_CURRENT_SOURCE_DIR})
+_my_add_executable(${ARGV})
+endmacro()
+
+function(_my_add_library _NAME)
   set(flags INTERFACE STATIC OBJECT AUTORCC AUTOMOC AUTOUIC)
   set(single ALIAS )
   set(multi HEADER SOURCE RESOURCES FORMS DEPENDS INCLUDES DEFINES QMLS )
@@ -86,7 +97,7 @@ function(my_add_library _NAME)
         add_library(${_NAME} OBJECT ${A_HEADER} ${A_SOURCE} ${A_RESOURCES} ${A_FORMS} ${_qrc_resources} ${_qml_resources})
       else()
         message(STATUS "Adding shared library ${_NAME} (alias: ${A_ALIAS})")
-        add_library(${_NAME} ${A_HEADER} ${A_SOURCE} ${A_RESOURCES} ${A_FORMS} ${_qrc_resources} ${_qml_resources})
+        add_library(${_NAME} SHARED ${A_HEADER} ${A_SOURCE} ${A_RESOURCES} ${A_FORMS} ${_qrc_resources} ${_qml_resources})
       endif()
     endif()
   endif()
@@ -119,9 +130,11 @@ function(my_add_library _NAME)
   if (A_ALIAS)
     add_library(${A_ALIAS} ALIAS ${_NAME})
   endif()
+  add_coverage(${_NAME})
+  testme()
 endfunction()
 
-function(my_add_executable _NAME)
+function(_my_add_executable _NAME)
   set(flags  AUTORCC AUTOMOC AUTOUIC INSTALL)
   set(single )
   set(multi HEADER SOURCE RESOURCES FORMS DEPENDS INCLUDES DEFINES QMLS )
@@ -156,6 +169,7 @@ function(my_add_executable _NAME)
   endif()
 
   set_target_properties(${_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
-
+  
+  add_coverage(${_NAME})
 endfunction()
 

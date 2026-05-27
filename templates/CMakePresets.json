@@ -12,6 +12,9 @@
             "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {
+                "CXXFLAGS": "-DQT_NO_INT128"
             }
         },
         {
@@ -19,14 +22,22 @@
             "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
+            },
+            "environment": {
+                "CXXFLAGS": "-DQT_NO_INT128"
             }
         },
         {
             "name": "coverage",
             "hidden": true,
+            "environment": {
+                "CXXFLAGS": "-DQT_NO_INT128"
+            },
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Coverage"
-            }
+            },
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build/${presetName}"
         },
         {
             "name": "gcc_linux",
@@ -74,6 +85,15 @@
             ]
         },
         {
+            "name": "gcc_linux_coverage",
+            "hidden": false,
+            "displayName": "GCC Coverage build",
+            "inherits": [
+                "gcc_linux",
+                "coverage"
+            ]
+        },
+        {
             "name": "gcc_linux_release",
             "displayName": "GCC Release build",
             "inherits": [
@@ -105,6 +125,15 @@
         {
             "name": "gcc_linux_debug",
             "configurePreset": "gcc_linux_debug"
+        },
+        {
+            "name": "gcc_linux_coverage",
+            "configurePreset": "gcc_linux_coverage",
+            "configuration": "Debug",
+            "targets": [
+                "all",
+                "lcov"
+            ]
         },
         {
             "name": "gcc_linux_release",

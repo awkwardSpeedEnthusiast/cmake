@@ -30,7 +30,12 @@ function(my_find_package _NAME)
   else() 
     find_package(${_NAME} ${version})
   endif()
-  string(TOUPPER ${CMAKE_BUILD_TYPE} BUILD_TYPE_UPPER)
+  get_property(multiconfig_generator GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+  if (multiconfig_generator)
+    set(BUILD_TYPE_UPPER "DEBUG")
+  else()
+    string(TOUPPER ${CMAKE_BUILD_TYPE} BUILD_TYPE_UPPER)
+  endif()
 
   if (A_LICENSE_PATH)
     install(FILES ${${_NAME}_PACKAGE_FOLDER_${BUILD_TYPE_UPPER}}/${A_LICENSE_PATH} 

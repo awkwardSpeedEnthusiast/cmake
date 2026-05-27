@@ -20,14 +20,17 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 project(template 
     VERSION 0.0.1 
     DESCRIPTION "A template description" 
-    LANGUAGES CXX
+    LANGUAGES CXX C
 )
 
+## coverage flags
+include(coverage)
 ## declarative library and executable definitions
 include(utilities)
 
 ## libraries and dependencies
 include(dependencies)
+include(libraries)
 
 ## we have tests
 include(CTest)
@@ -39,5 +42,6 @@ add_subdirectory(src)
 ## testing stuff
 if (BUILD_TESTING)
   enable_testing()
+
   add_subdirectory(tests)
 endif()

@@ -1,0 +1,69 @@
+################################################################
+#
+# Conanfile
+#
+# This file is read by the `conan install` command to determine
+# which dependencies to load/build and which find_package files
+# to generate in the build folder.
+#
+################################################################
+
+
+################################################################
+# Requires section for defining packages and package versions
+[requires]
+
+# used for asio (udp messaging version 1)
+boost/1.91.0
+
+# used for Qt6::Networking (udp messaging version 2)
+qt/6.10.1
+
+# for testing c++ code (https://conan.io/center/recipes?value=gtest, https://google.github.io/googletest/)
+gtest/1.17.0
+
+
+################################################################
+# Option section for passing additional options to respective requirements
+[options]
+
+# Make Qt build minimal by switching everything off, that is not needed
+qt/*:shared = True
+qt/*:opengl = desktop
+qt/*:with_vulkan = False
+qt/*:openssl = True
+qt/*:with_pcre2 = True
+qt/*:with_glib = False
+qt/*:with_doubleconversion = True
+qt/*:with_freetype = False
+qt/*:with_fontconfig = False
+qt/*:with_icu = False
+qt/*:with_harfbuzz = False
+qt/*:with_libjpeg = False
+qt/*:with_libpng = False
+qt/*:with_sqlite3 = False
+qt/*:with_mysql = False
+qt/*:with_pq = False
+qt/*:with_odbc = False
+qt/*:with_zstd = False
+qt/*:with_brotli = False
+qt/*:with_dbus = False
+qt/*:with_libalsa = False
+qt/*:with_openal = False
+qt/*:with_gstreamer = False
+qt/*:with_pulseaudio = False
+qt/*:with_gssapi = False
+qt/*:with_md4c = False
+qt/*:with_x11 = False
+qt/*:with_egl = False
+qt/*:gui = False
+qt/*:widgets = False
+qt/*:device = None
+qt/*:cross_compile = None
+qt/*:sysroot = None
+qt/*:multiconfiguration = False
+qt/*:disabled_features = ['qtsvg', 'qtdeclarative', 'qttools', 'qttranslations', 'qtdoc', 'qtwayland', 'qtquickcontrols2', 'qtquicktimeline', 'qtquick3d', 'qtshadertools', 'qt5compat', 'qtactiveqt', 'qtcharts', 'qtdatavis3d', 'qtlottie', 'qtscxml', 'qtvirtualkeyboard', 'qt3d', 'qtimageformats', 'qtnetworkauth', 'qtcoap', 'qtmqtt', 'qtopcua', 'qtmultimedia', 'qtlocation', 'qtsensors', 'qtconnectivity', 'qtserialbus', 'qtserialport', 'qtwebsockets', 'qtwebchannel', 'qtwebengine', 'qtwebview', 'qtremoteobjects', 'qtpositioning', 'qtlanguageserver', 'qtspeech', 'qthttpserver', 'qtquick3dphysics', 'qtgrpc', 'qtquickeffectmaker']
+
+[generators]
+CMakeDeps
+CMakeConfigDeps

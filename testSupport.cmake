@@ -43,8 +43,14 @@ include_guard(GLOBAL)
 
 if (BUILD_TESTING)
 include(GoogleTest)
+include(coverage)
 
-function(my_add_test _NAME)
+macro(my_add_test)
+set(_current_directory ${CMAKE_CURRENT_SOURCE_DIR})
+_my_add_test(${ARGV})
+endmacro()
+
+function(_my_add_test _NAME)
   set(flags  AUTORCC AUTOMOC AUTOUIC)
   set(single )
   set(multi HEADER SOURCE RESOURCES FORMS DEPENDS INCLUDES DEFINES QMLS)
@@ -84,6 +90,8 @@ function(my_add_test _NAME)
   gtest_add_tests(TARGET ${_NAME}
                   SOURCES ${A_SOURCE}
   )
+
+  add_coverage(${_NAME})
 endfunction()
 
 function(my_add_qml_test _NAME)
@@ -142,6 +150,8 @@ function(my_add_qml_test _NAME)
   
   # Add the test to CTest
   add_test(NAME ${_NAME} COMMAND ${_NAME})
+
+  add_coverage(${_NAME})
 
   # Set environment variable to use offscreen platform (no display needed)
   set_tests_properties(${_NAME} PROPERTIES

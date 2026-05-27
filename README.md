@@ -99,6 +99,16 @@ The libraries need to be referenced in both files to work.
 And `libraries.cmake` needs to be referenced in your `CMakeLists.txt` to include the libraries
 in your build.
 
+There are several versions of conanfile.txt available here for different requirements on the
+Qt library. Qt is a huge library with a multitude of modules, which needs ages to build if used 
+in full. There are:
+
+* `conanfile_qt_minimal.txt`: about 700 build steps - no GUI elements contained
+* `conanfile_qt_widgets.txt`: all GPL modules disabled, Qt Gui and Qt Widgets is enabled, Qt Quick (QML) is not
+* `conanfile_qt_qml.txt`: 5200 build steps - QML included; still not everything Qt provides
+
+Copy the respective file to the top level directory and rename it to `conanfile.txt`.
+
 #### .clang-format
 
 This is used with the C++ code beautifier clang-format. If you don't know it yet, DO CHECK IT OUT!
