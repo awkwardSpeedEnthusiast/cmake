@@ -1,0 +1,15 @@
+Jinja2==3.1.6
+MarkupSafe==3.0.3 
+PyYAML==6.0.3 
+certifi==2026.2.25 
+charset_normalizer==3.4.5 
+colorama==0.4.6 
+conan==2.26.2 
+distro==1.9.0 
+fasteners==0.20 
+idna==3.11 
+patch-ng===1.18.1 
+python-dateutil==2.9.0.post0 
+requests==2.32.5 
+six==1.17.0 
+urllib3==2.6.3

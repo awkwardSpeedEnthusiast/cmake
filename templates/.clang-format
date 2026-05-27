@@ -1,0 +1,22 @@
+BasedOnStyle: LLVM
+ColumnLimit: 100
+
+Language: Cpp
+AlwaysBreakTemplateDeclarations: true
+PointerAlignment: Left
+BraceWrapping:
+  AfterClass:      true
+  AfterControlStatement: false
+  AfterEnum:       true
+  AfterFunction:   true
+  AfterNamespace:  false
+  AfterObjCDeclaration: true
+  AfterStruct:     true
+  AfterUnion:      true
+  BeforeCatch:     false
+  BeforeElse:      false
+  IndentBraces:    false
+BreakBeforeBraces: Custom
+InsertBraces: true
+AlwaysBreakAfterReturnType: None
+PenaltyReturnTypeOnItsOwnLine: 10000000

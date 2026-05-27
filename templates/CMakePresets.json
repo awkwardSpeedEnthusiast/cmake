@@ -1,0 +1,404 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 27,
+        "patch": 0
+    },
+    "$comment": "Base template preset file",
+    "configurePresets": [
+        {
+            "name": "debug",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "coverage",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Coverage"
+            }
+        },
+        {
+            "name": "gcc_linux",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "clang_linux",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "basic",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}"
+            }
+        },
+        {
+            "name": "gcc_linux_debug",
+            "hidden": false,
+            "displayName": "GCC Debug build",
+            "inherits": [
+                "gcc_linux",
+                "debug",
+                "basic"
+            ]
+        },
+        {
+            "name": "gcc_linux_release",
+            "displayName": "GCC Release build",
+            "inherits": [
+                "gcc_linux",
+                "release",
+                "basic"
+            ]
+        },
+        {
+            "name": "clang_linux_debug",
+            "displayName": "Clang Debug build",
+            "inherits": [
+                "clang_linux",
+                "debug",
+                "basic"
+            ]
+        },
+        {
+            "name": "clang_linux_release",
+            "displayName": "Clang Release build",
+            "inherits": [
+                "clang_linux",
+                "release",
+                "basic"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "gcc_linux_debug",
+            "configurePreset": "gcc_linux_debug"
+        },
+        {
+            "name": "gcc_linux_release",
+            "configurePreset": "gcc_linux_release"
+        },
+        {
+            "name": "clang_linux_debug",
+            "configurePreset": "clang_linux_debug"
+        },
+        {
+            "name": "clang_linux_release",
+            "configurePreset": "clang_linux_release"
+        },
+        {
+            "name": "gcc_linux_debug_i",
+            "configurePreset": "gcc_linux_debug",
+            "targets": [
+                "install"
+            ]
+        },
+        {
+            "name": "gcc_linux_release_i",
+            "configurePreset": "gcc_linux_release",
+            "targets": [
+                "install"
+            ]
+        },
+        {
+            "name": "clang_linux_debug_i",
+            "configurePreset": "clang_linux_debug",
+            "targets": [
+                "install"
+            ]
+        },
+        {
+            "name": "clang_linux_release_i",
+            "configurePreset": "clang_linux_release",
+            "targets": [
+                "install"
+            ]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "basic",
+            "hidden": true,
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        },
+        {
+            "name": "gcc_linux_debug",
+            "configurePreset": "gcc_linux_debug",
+            "inherits": [
+                "basic"
+            ]
+        },
+        {
+            "name": "gcc_linux_release",
+            "configurePreset": "gcc_linux_release",
+            "inherits": [
+                "basic"
+            ]
+        },
+        {
+            "name": "clang_linux_debug",
+            "configurePreset": "clang_linux_debug",
+            "inherits": [
+                "basic"
+            ]
+        },
+        {
+            "name": "clang_linux_release",
+            "configurePreset": "clang_linux_release",
+            "inherits": [
+                "basic"
+            ]
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "gcc_linux_debug",
+            "configurePreset": "gcc_linux_debug",
+            "generators": [
+                "TGZ"
+            ]
+        },
+        {
+            "name": "gcc_linux_release",
+            "configurePreset": "gcc_linux_release",
+            "generators": [
+                "TGZ"
+            ]
+        },
+        {
+            "name": "clang_linux_debug",
+            "configurePreset": "clang_linux_debug",
+            "generators": [
+                "TGZ"
+            ]
+        },
+        {
+            "name": "clang_linux_release",
+            "configurePreset": "clang_linux_release",
+            "generators": [
+                "TGZ"
+            ]
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "gcc_linux_debug",
+            "displayName": "GCC Debug: configure, build, test, install, package",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "gcc_linux_debug"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc_linux_debug"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc_linux_debug_i"
+                },
+                {
+                    "type": "test",
+                    "name": "gcc_linux_debug"
+                },
+                {
+                    "type": "package",
+                    "name": "gcc_linux_debug"
+                }
+            ]
+        },
+        {
+            "name": "gcc_linux_release",
+            "displayName": "GCC Release: configure, build, test, install, package",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "gcc_linux_release"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc_linux_release"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc_linux_release_i"
+                },
+                {
+                    "type": "test",
+                    "name": "gcc_linux_release"
+                },
+                {
+                    "type": "package",
+                    "name": "gcc_linux_release"
+                }
+            ]
+        },
+        {
+            "name": "clang_linux_debug",
+            "displayName": "Clang Debug: configure, build, test, install, package",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clang_linux_debug"
+                },
+                {
+                    "type": "build",
+                    "name": "clang_linux_debug"
+                },
+                {
+                    "type": "build",
+                    "name": "clang_linux_debug_i"
+                },
+                {
+                    "type": "test",
+                    "name": "clang_linux_debug"
+                },
+                {
+                    "type": "package",
+                    "name": "clang_linux_debug"
+                }
+            ]
+        },
+        {
+            "name": "clang_linux_release",
+            "displayName": "Clang Release: configure, build, test, install, package",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clang_linux_release"
+                },
+                {
+                    "type": "build",
+                    "name": "clang_linux_release"
+                },
+                {
+                    "type": "build",
+                    "name": "clang_linux_release_i"
+                },
+                {
+                    "type": "test",
+                    "name": "clang_linux_release"
+                },
+                {
+                    "type": "package",
+                    "name": "clang_linux_release"
+                }
+            ]
+        },
+        {
+            "name": "my_gcc_linux_debug",
+            "displayName": "GCC Debug: configure, build, test",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "gcc_linux_debug"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc_linux_debug"
+                },
+                {
+                    "type": "test",
+                    "name": "gcc_linux_debug"
+                }
+            ]
+        },
+        {
+            "name": "my_gcc_linux_release",
+            "displayName": "GCC Release: configure, build, test",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "gcc_linux_release"
+                },
+                {
+                    "type": "build",
+                    "name": "gcc_linux_release"
+                },
+                {
+                    "type": "test",
+                    "name": "gcc_linux_release"
+                }
+            ]
+        },
+        {
+            "name": "my_clang_linux_debug",
+            "displayName": "Clang Debug: configure, build, test",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clang_linux_debug"
+                },
+                {
+                    "type": "build",
+                    "name": "clang_linux_debug"
+                },
+                {
+                    "type": "test",
+                    "name": "clang_linux_debug"
+                }
+            ]
+        },
+        {
+            "name": "my_clang_linux_release",
+            "displayName": "Clang Release: configure, build, test",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "clang_linux_release"
+                },
+                {
+                    "type": "build",
+                    "name": "clang_linux_release"
+                },
+                {
+                    "type": "test",
+                    "name": "clang_linux_release"
+                }
+            ]
+        }
+    ],
+    "vendor": {
+        "github.com/awardSpeedEnthusiast": {
+            "autoFormat": true
+        }
+    }
+}
