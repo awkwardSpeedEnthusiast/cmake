@@ -119,6 +119,15 @@
                 "release",
                 "basic"
             ]
+        },
+        {
+            "name": "clang_linux_coverage",
+            "hidden": false,
+            "displayName": "Clang Coverage build",
+            "inherits": [
+                "clang_linux",
+                "coverage"
+            ]
         }
     ],
     "buildPresets": [

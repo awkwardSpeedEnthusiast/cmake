@@ -57,6 +57,21 @@ Wrapper for CMake `find_package` adding an install step for the license:
 
 Arguments: _NAME, VERSION, LICENSE_PATH
 
+#### coverage.cmake
+
+Utilities for coverage builds.
+Supported compilers: clang, gcc.
+
+##### add_coverage
+
+This function is called by functions _my_add_library_ and _my_add_executable_. There is no need to call it in addition.
+It adds instrumentation for creating coverage builds and records all instrumented binaries for later evaluation step.
+
+##### finalize_coverage
+
+Needs to be called after all other targets are declared. Here for all recorded binaries a build step to analyze the
+coverage result.
+
 ### Templates
 
 The templates directory contains a set of useful files to set up your C++ project with CMake and

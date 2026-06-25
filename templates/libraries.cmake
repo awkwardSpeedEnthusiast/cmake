@@ -2,7 +2,7 @@ include_guard(GLOBAL)
 include(dependencies)
 
 my_find_package(Qt6 
-    COMPONENTS Core Qml Quick QuickTest Test
+    COMPONENTS Core Widgets Gui Test
     LICENSE_PATH licenses/LICENSES/LGPL-3.0-only.txt
 )
 

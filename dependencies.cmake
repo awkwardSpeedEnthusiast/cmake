@@ -13,8 +13,10 @@ include_guard(GLOBAL)
 #      LICENSE_PATH: path to the license file to install alongside
 #########################################################################
 
+list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/conan/)
+
 function(my_find_package _NAME)
-  set(flags "")
+  set(flags "REQUIRED")
   set(single "VERSION;LICENSE_PATH")
   set(multi "COMPONENTS")
   cmake_parse_arguments(A ${flags} ${single} ${multi} ${ARGN})
@@ -24,11 +26,16 @@ function(my_find_package _NAME)
   if (A_VERSION)
     set(version "${A_VERSION}")
   endif()
+  
+  set(_required "")
+  if (A_REQUIRED)
+    set(_required "REQUIRED")
+  endif()
 
   if (A_COMPONENTS)
-    find_package(${_NAME} ${version} COMPONENTS ${A_COMPONENTS})
+    find_package(${_NAME} ${version} COMPONENTS ${A_COMPONENTS} ${_required})
   else() 
-    find_package(${_NAME} ${version})
+    find_package(${_NAME} ${version} ${_required})
   endif()
   get_property(multiconfig_generator GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
   if (multiconfig_generator)
@@ -42,13 +49,3 @@ function(my_find_package _NAME)
             DESTINATION ${CMAKE_INSTALL_PREFIX}/licenses/${_NAME}/License.txt)
   endif()
 endfunction()
-
-my_find_package(Qt6 COMPONENTS Core Qml Quick QuickTest Test)
-# QT_CMAKE_EXPORT_NAMESPACE is set inside Qt's cmake scripts, which run inside
-# my_find_package (a function scope). Propagate it so that qt6_wrap_cpp and
-# AUTOMOC can resolve Qt6::moc in subdirectory scopes.
-if(NOT QT_CMAKE_EXPORT_NAMESPACE)
-  set(QT_CMAKE_EXPORT_NAMESPACE Qt6)
-endif()
-my_find_package(Boost)
-my_find_package(GTest)
